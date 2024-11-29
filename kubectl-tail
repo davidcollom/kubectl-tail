@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+exec stern --tail=${KUBECTL_TAIL_START:-0} $@
