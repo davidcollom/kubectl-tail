@@ -20,40 +20,49 @@ This plugin is published in a personal [krew index](https://github.com/davidcoll
 
 ```bash
 kubectl krew index add davidcollom https://github.com/davidcollom/krew-index
-kubectl krew install tail
+kubectl krew install davidcollom/tail
 ```
 
 The index registers it as `tail`, which installs the `kubectl-tail` binary and gives you the
-`kubectl tail` subcommand.
+`kubectl tail` subcommand. The index prefix is required — the upstream index also has a plugin
+called `tail`, so a bare `kubectl krew install tail` would install that one instead.
 
 ### Manual
 
-Download the latest release archive, unzip it, and place the `kubectl-tail` script on your `PATH`:
+Download the latest release archive and unzip it:
 
 ```bash
-kubectl tail get pods
+curl -LO https://github.com/davidcollom/kubectl-tail/releases/download/v0.0.1/release.zip
+unzip release.zip
+chmod +x kubectl-tail
+mv kubectl-tail /usr/local/bin/
 ```
 
 `kubectl` discovers plugins by looking for an executable named `kubectl-<plugin>` on your `PATH`, so the
-script must keep its `kubectl-tail` name and be executable (`chmod +x kubectl-tail`).
+script must keep its `kubectl-tail` name and be executable.
 
 ## Usage
 
 ```bash
 # Tail logs from all pods in the current namespace
-kubectl tail
+kubectl tail .
 
 # Tail logs from a specific pod
 kubectl tail pod/my-pod
+
+# Tail logs from pods matching a name pattern
+kubectl tail my-app
 
 # Tail logs from pods matching a label selector
 kubectl tail -l app=my-app
 
 # Follow logs across all namespaces
-kubectl tail --all-namespaces
+kubectl tail . --all-namespaces
 ```
 
-Any additional arguments are passed straight through to `stern`, so the full `stern` flag set is available.
+The arguments are passed straight through to `stern`, so the full `stern` flag set is available.
+Note that this is a stern wrapper rather than a set of `kubectl` subcommands — `kubectl tail get pods`
+is not valid, and the first positional argument is treated as a pod name pattern.
 
 ## Configuration
 
