@@ -76,4 +76,4 @@ publishes it to the [GitHub releases page](https://github.com/davidcollom/kubect
 
 ## License
 
-See the repository for licensing details.
+No licence file is included in this repository.
