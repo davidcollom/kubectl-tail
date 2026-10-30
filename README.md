@@ -20,8 +20,11 @@ This plugin is published in a personal [krew index](https://github.com/davidcoll
 
 ```bash
 kubectl krew index add davidcollom https://github.com/davidcollom/krew-index
-kubectl krew install kubectl-tail
+kubectl krew install tail
 ```
+
+The index registers it as `tail`, which installs the `kubectl-tail` binary and gives you the
+`kubectl tail` subcommand.
 
 ### Manual
 
